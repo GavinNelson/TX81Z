@@ -1,0 +1,151 @@
+// out: style.css;
+
+* {
+  box-sizing: border-box;
+}
+@gap: 10px;
+@height: 50px;
+html {
+  //touch-action: manipulation;
+}
+body {
+  background-color: #000;
+}
+.wrap {
+  width:100%;
+  transform-origin: top left;
+  //transform: rotate(-90deg);
+  //margin-top: 100vh;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "op1 op1 op2 op2 op3 op3 op4 op4"
+    "alg alg alg alg lfo lfo mod mod"
+}
+.struct {
+  grid-area: alg;
+}
+input[type=range] {
+  overflow:hidden;
+  -webkit-appearance: none;
+  width: 100%;
+  height: @height;
+  padding: 0;
+  position: relative;
+  background-color: #111;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50px;
+    height: @height;
+    background: #000;
+    cursor: pointer;
+    z-index: 5;
+    box-sizing: border-box;
+    border: 5px solid #fff;
+    transform: translateY(-50%);
+    border-radius: 50%;
+  }
+  &::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    background-color: #fff;
+    height: 20px;
+    padding: 10px;
+  }
+  &[max="1"]::-webkit-slider-thumb {
+    width:50%;
+  }
+}
+input {
+  margin: 0;
+}
+input[title],
+group[title] {
+  position: relative;
+  &:before {
+    content: attr(title);
+    color: #fff;
+    position: absolute;
+    border: 1px solid #fff;
+    padding: 0 1em;
+    background-color: #000;
+    font-size: 16px;
+    z-index: 1;
+    pointer-events: none;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  height: @height;
+  width: 100%;
+  border: 5px solid #fff;
+  &:checked {
+    background-color: #fff;
+  }
+}
+
+.op {
+  display: flex;
+  flex-direction: column;
+  flex-grow:1;
+}
+.op1 {
+  grid-area: op1;
+}
+.op2 {
+  grid-area: op2;
+}
+.op3 {
+  grid-area: op3;
+}
+.op4 {
+  grid-area: op4;
+}
+group {
+  display: grid;
+  grid-gap: 5px;
+  padding: 5px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  place-items: stretch;
+  justify-content: space-between;
+  height: @height*2;
+  background-color: #fff;
+  input[type="radio"] {
+    -webkit-appearance: none;
+    background-color: #000;
+    &:checked {
+      background-color: #fff;
+    }
+  }
+}
+input[name$="_fix-freq-range"],
+input[name$="_fix-freq-fine"] {
+  display: none;
+  [name$="_fix-freq-enable"]:checked ~ & {
+    display: block;
+  }
+}
+input[name$="_fix-freq-enable"]:checked ~ [name$="_freq"],
+input[name$="_fix-freq-enable"]:checked ~ [name$="_detune"] {
+  display: none;
+}
+
+input[name$="_enable"] ~ * {
+  opacity: .25;
+}
+
+input[name$="_enable"]:checked ~ * {
+  opacity:  1;
+}
+.lfo {
+  grid-area: lfo;
+  group {
+    height: @height;
+  }
+}
